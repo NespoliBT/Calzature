@@ -1,3 +1,69 @@
+const createGrid = (scene) => {
+    const LinesMaterial = new THREE.LineBasicMaterial({ color: 0xffffff });
+    LinesMaterial.transparent = true
+    LinesMaterial.opacity = 0.3
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(i * 0.4, 0, 0),
+            new THREE.Vector3(i * 0.4, 5.2, 0)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, i * 0.4, 0),
+            new THREE.Vector3(5.2, i * 0.4, 0)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, i * 0.4),
+            new THREE.Vector3(5.2, 0, i * 0.4)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(i * 0.4, 0, 0),
+            new THREE.Vector3(i * 0.4, 0, 5.2)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, i * 0.4, 0),
+            new THREE.Vector3(0, i * 0.4, 5.2)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+
+    for (let i = 0; i < 14; i++) {
+        const geometry = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, i * 0.4),
+            new THREE.Vector3(0, 5.2, i * 0.4)
+        ]);
+
+        const line = new THREE.Line(geometry, LinesMaterial)
+        scene.add(line)
+    }
+}
+
 const coordinates = [
     [-2.820512821, 1.948717949, -2.871794872],
     [-2.615384615, 0.7692307692, -2.794871795],
@@ -36,7 +102,7 @@ const mouse = new THREE.Vector2();
 
 // Initialize camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+camera.position.z = 10;
 
 // Initialize renderer
 const renderer = new THREE.WebGLRenderer();
@@ -46,6 +112,7 @@ document.getElementById("main").appendChild(renderer.domElement);
 // Initialize controls for rotating the scene
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+createGrid(scene)
 // Create axes
 const axisXGeometry = new THREE.BufferGeometry().setFromPoints([
     new THREE.Vector3(0, 0, 0),
@@ -72,6 +139,8 @@ scene.add(axisX);
 scene.add(axisY);
 scene.add(axisZ);
 
+
+
 // Create points based on provided coordinates
 const points = [];
 coordinates.forEach((coord, i) => {
@@ -83,7 +152,7 @@ coordinates.forEach((coord, i) => {
     const pointMaterial = new THREE.MeshBasicMaterial();
     const point = new THREE.Mesh(pointGeometry, pointMaterial);
     pointMaterial.color.setRGB(ci_percent, sc_percent, sa_percent)
-    console.log(pointMaterial);
+
     point.position.set(coord[0] + 3, coord[1] + 3, coord[2] + 3);
     point.name = i
     scene.add(point);
@@ -117,9 +186,9 @@ function onMouseMove(event) {
 
     points.forEach(p => {
         p.material.transparent = true
-        p.material.opacity = 0.3
+        p.material.opacity = 0.5
         lines[p.name].material.transparent = true
-        lines[p.name].material.opacity = 0.3
+        lines[p.name].material.opacity = 0.5
     });
 
     if (intersects.length > 0) {
@@ -141,9 +210,15 @@ function onMouseMove(event) {
                 <img src="assets/${id + 1}.png" />
             </div>
             <div class="coordinates">
-                Percentuale Scarpa: ${sc_percent}% <br>
-                Percentuale Sandalo: ${sa_percent}% <br>
-                Percentuale Ciabatta: ${ci_percent}%
+            Percentuale<span class="scarpa">
+                     Scarpa: 
+                </span>${sc_percent}% <br>
+                Percentuale<span class="sandalo">
+                     Sandalo: 
+                </span>${sa_percent}%<br>
+                Percentuale<span class="ciabatta">
+                     Ciabatta: 
+                </span>${ci_percent}%
             </div>
             
         `

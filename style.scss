@@ -17,6 +17,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
     background-color: white;
     padding: 32px;
     margin: 32px;
@@ -24,4 +25,50 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2rem;
     border-radius: 8px;
+    flex-direction: column;
+    gap: 32px;
+
+    .img {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        img {
+            height: 300px;
+            border-radius: 16px;
+            box-shadow: 0 0 20px -10px black;
+        }
+    }
+
+    .scarpa {
+        color: #00c500;
+    }
+
+    .sandalo {
+        color: #0000c5;
+    }
+
+    .ciabatta {
+        color: #c50000;
+    }
+
+    @media screen and (max-width: 1200px) {
+        margin: 0;
+        bottom: 0;
+        left: 0;
+        top: unset;
+        width: 100%;
+        border-radius: 0px;
+        flex-direction: row;
+
+        .img {
+            width: unset;
+
+            img {
+                width: 300px;
+                height: 300px;
+                object-fit: contain;
+            }
+        }
+    }
 }
